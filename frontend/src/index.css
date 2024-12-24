@@ -1,0 +1,30 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.google.com/selection?preview.text=SOUL&query=jaro');
+
+
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('/fonts/Inter/static/Inter_18pt-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Bokor';
+  src: url('/fonts/Bokor/Bokor-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Jaro';
+  src: url('/fonts/Jaro.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Rubik';
+  src: url('/fonts/Rubik.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
