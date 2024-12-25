@@ -7,7 +7,7 @@ const AdminPanel = () => {
     <div className="fixed top-40 left-0 border-r border-t border-black bg-white md:w-80 h-full">
       <div className="grid grid-cols-1 gap-y-4">
         <Link 
-          to="/user/portfolyo-list" 
+          to="/user/adjust-featured-animes" 
           className="flex justify-center items-center w-full h-16 bg-slate-800 font-customNormal text-white font-medium text-lg tracking-wide text-nowrap mt-5 underline">
           <img 
             src="/add.png"
