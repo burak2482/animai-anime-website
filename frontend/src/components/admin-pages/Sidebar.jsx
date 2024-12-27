@@ -31,6 +31,18 @@ const AdminPanel = () => {
           Anime ekle/sil
        </Link>
        <Link 
+          to="/user/edit-calendar" 
+          className="flex justify-center items-center w-full h-16 bg-slate-800 font-customNormal text-white font-medium text-lg tracking-wide text-nowrap underline">
+           <img 
+            src="/add.png" 
+            alt="Person Icon" 
+            width="16" 
+            height="16" 
+            className="mr-2"
+          />
+          Takvimi düzenle
+       </Link>
+       <Link 
           to="/user/account-edit" 
           className="flex justify-center items-center w-full h-16 bg-slate-800 font-customNormal text-white font-medium text-lg tracking-wide text-nowrap underline">
            <img 

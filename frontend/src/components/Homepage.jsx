@@ -1,19 +1,29 @@
-import React from 'react'
+import React, { act, useState } from 'react'
 import { Link } from 'react-router-dom';
 
 const Homepage = () => {
+  const [activeDay ,setActiveDay] = useState("Pzt");
+
+  const days = [
+    { name: "Pzt", label: "Pzt"},
+    { name: "Salı", label: "Salı"},
+    { name: "Çşb", label: "Çşb"},
+    { name: "Pşb", label: "Pşb"},
+    { name: "Cuma", label: "Cuma"},
+    { name: "Cmts", label: "Cmts"},
+    { name: "Pzr", label: "Pzr"},
+  ];
+
+  const isClicked = () => {
+   setIsActive(true)
+  }
   return (
       <div className="flex flex-col bg-neutral-800 min-h-screen">
       <div className="md:px-80">
-        <div className="bg-neutral-700 w-full h-60 mt-1">
-          <div className="border-b-2 ">
-            <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2"><img></img>En son izlediğim / gezindiğim bölümler</h1>
-          </div>
-          <div>
-            <div>
-              içerikler
-            </div>
-          </div>
+"       <div className="flex flex-row md:gap-x-16 md:justify-center">
+          {days.map((day) => (
+            <h1 key={day.name} className={`font-semibold text-sm py-1 ml-1 text-white px-3 rounded-lg md:text-2xl md:py-2 md:px-8 ${activeDay === day.name ? "bg-neutral-500" : ""}`} onClick={() => setActiveDay(day.name)}>{day.label}</h1>
+          ))}
         </div>
         <div>
           <div className="bg-neutral-700 w-full h-44 mt-2">

@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 const Header = () => {
   return (
     <div className="fixed w-full border-b-2 border-neutral-500 py-12">
-      <div className="flex flex-row justify-between items-center">
+      <div className="flex flex-row justify-between items-center bg-white">
         <div className="w-64 py-2">
           <Link to="/pages/admin-page-home" className="font-semibold font-customJaro text-5xl text-black border-r-2 ml-10 pr-9 border-black py-12">ANIMAI</Link>
         </div>

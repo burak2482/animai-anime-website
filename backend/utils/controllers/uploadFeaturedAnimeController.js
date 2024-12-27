@@ -5,7 +5,7 @@ export const uploadFeaturedAnime = async (req,res) => {
     const {name,year,type} = req.body
 
     if (!name || req.file || !year || !type) {
-      console.log('Eksik alanlar:', {type. file: req.file, name})
+      console.log('Eksik alanlar:', {type, file: req.file, name})
       res.status(400).json({error: 'Please fill all fields'});
 
     try {

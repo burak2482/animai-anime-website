@@ -21,7 +21,6 @@ const Header = () => {
         <div className="flex flex-row justify-between items-center">
           <div className="bg-neutral-800 gap-x-6 flex flex-row py-3">
             <Link className="font-semibold text-white ml-3 md:text-2xl md:ml-10">Anasayfa</Link>
-            <Link className="font-semibold text-white md:text-2xl">Takvim</Link>
             <Link className="font-semibold text-white md:text-2xl">Anime Arşivi</Link>
             <Link className="hidden sm:block font-semibold text-white text-2xl">Yeni Bölümler</Link>
             <Link className="hidden sm:block  font-semibold text-white text-2xl">Anime Listem</Link>

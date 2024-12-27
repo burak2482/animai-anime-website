@@ -1,24 +1,24 @@
 import mongoose from 'mongoose'
 
-const Schema = new Mongoose.Schema({
+const Schema = new mongoose.Schema({
   name: {
     type: String,
     required: true,
-  }
+  },
   type: {
     type: [String],
     required: true,
-  }
+  },
   photo: {
     type: String,
     required: true,
-  }
+  },
   year: {
     type: String,
     required: true,
-  }
+  },
 });
 
-const FeaturedAnimeModel = mongoose.Model('anime', Schema)
+const FeaturedAnimeModel = mongoose.model('anime', Schema)
 
-export default AnimeModel;
+export default FeaturedAnimeModel;
