@@ -66,6 +66,19 @@ const AnimeCalendar = () => {
     getCalendarInfo();
   }, []);
 
+  const handleCalendarDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/user/delete-calendar/${id}`);
+      setCalendar((prevCalendar) =>
+        prevCalendar.filter((portfolyo) => portfolyo.id !== id)
+      );
+      getCalendarInfo();
+    } catch (err) {
+      console.log("Error happened while deleting Calendar info:", err.response?.data || err.message);
+    }
+  };
+  
+
 
   return (
     <div className="flex flex-col justify-center items-center">
@@ -117,6 +130,7 @@ const AnimeCalendar = () => {
                   <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.animeName}</td>
                   <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.episodeOfAnime}</td>
                   <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.selectedDays.join(', ')}</td>
+                  <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4"><button className="bg-neutral-900 text-white text-xl font-semibold px-8 py-2 rounded-lg" onClick={() => handleCalendarDelete(anime._id)}>Sil</button></td>
                 </tr>
               ))
             ) : (
