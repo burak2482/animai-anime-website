@@ -1,18 +1,35 @@
-import React, { act, useState } from 'react'
+import React, { act, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import axios from 'axios'
 
 const Homepage = () => {
   const [activeDay ,setActiveDay] = useState("Pzt");
+  const [calendar, setCalendar] = useState([]);
 
   const days = [
     { name: "Pzt", label: "Pzt"},
     { name: "Salı", label: "Salı"},
-    { name: "Çşb", label: "Çşb"},
+    { name: "Çrş", label: "Çrş"},
     { name: "Pşb", label: "Pşb"},
     { name: "Cuma", label: "Cuma"},
     { name: "Cmts", label: "Cmts"},
     { name: "Pzr", label: "Pzr"},
   ];
+
+ const getCalendarInfo = async () => {
+
+  try {
+    const response = await axios.get('http://localhost:5000/user/get-calendar');
+    console.log('API Response:', response.data);
+    setCalendar(response.data)
+  } catch (err) {
+    console.log('Error happened while getting Calendar Info', err)
+  }
+ }
+
+ useEffect(() => {
+  getCalendarInfo();
+ }, [])
 
   const isClicked = () => {
    setIsActive(true)
@@ -25,6 +42,31 @@ const Homepage = () => {
             <h1 key={day.name} className={`font-semibold text-sm py-1 ml-1 text-white px-3 rounded-lg md:text-2xl md:py-2 md:px-8 ${activeDay === day.name ? "bg-neutral-500" : ""}`} onClick={() => setActiveDay(day.name)}>{day.label}</h1>
           ))}
         </div>
+        <div className="flex flex-col justify-center items-center mt-10 mb-10 w-full">
+  <div className="grid grid-cols-3 gap-x-4 bg-neutral-700 rounded-lg w-full">
+    {calendar.filter((anime) => anime.selectedDays.includes(activeDay)).map((anime, index) => (
+      <div key={anime._id} className="flex flex-row justify-center items-center w-full rounded-lg mb-5 mt-5">
+        <div className="flex h-full flex-row items-center w-full border-4 border-white ml-4 mr-4">
+          <div className="h-full">
+            <img src={`/calendarphotos/${anime.photo}`} className="h-40 w-30 object-cover" alt="Anime" />
+          </div>
+          <div className="px-3 w-full">
+            <div>
+              <h1 className="text-white font-semibold font-serif text-xl mb-3 max-w-xs">{anime.animeName}</h1>
+              <h1 className="text-white font-semibold font-mono text-xl">{anime.episodeOfAnime}</h1>
+            </div>
+            <div className="flex flex-row justify-end w-full">
+              <Link to={anime.animeSeriesLink} className="text-blue-400 font-semibold text-sm underline">
+                Animeye git =>
+              </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
+
         <div>
           <div className="bg-neutral-700 w-full h-44 mt-2">
             <div className="border-b-2">

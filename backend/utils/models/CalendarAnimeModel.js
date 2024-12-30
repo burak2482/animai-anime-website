@@ -9,6 +9,14 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  photo: {
+    type: String,
+    required: true,
+  },
+  animeSeriesLink: {
+    type: String,
+    required: true,
+  },
   selectedDays: {
     type: Array,
     required: true,

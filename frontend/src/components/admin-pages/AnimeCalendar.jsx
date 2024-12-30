@@ -5,6 +5,8 @@ const AnimeCalendar = () => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [animeName, setAnimeName] = useState('');
   const [episodeOfAnime, setEpisodeOfAnime] = useState('');
+  const [animeSeriesLink, setAnimeSeriesLink] = useState('');
+  const [photo, setPhoto] = useState(null);
   const [calendar, setCalendar] = useState([]);
 
   const days = [
@@ -33,11 +35,12 @@ const AnimeCalendar = () => {
       return;
     }
 
-    const formData = {
-      animeName,
-      episodeOfAnime,
-      selectedDays,
-    };
+    const formData = new FormData();
+    formData.append('animeName', animeName);
+    formData.append('episodeOfAnime', episodeOfAnime);
+    formData.append('selectedDays', selectedDays);
+    formData.append('animeSeriesLink', animeSeriesLink);
+    formData.append('photo', photo);
 
     try {
       const response = await axios.post('http://localhost:5000/user/add-calendar', formData);
@@ -88,7 +91,11 @@ const AnimeCalendar = () => {
           <label className="font-semibold text-xl text-black mb-5">Anime Adı</label>
           <input type="text" className="px-4 bg-slate-50 py-2" value={animeName} onChange={(e) => setAnimeName(e.target.value)} />
           <label className="font-semibold text-xl text-black mb-5">Anime Bölümü</label>
-          <input type="text" className="px-4 bg-slate-50 py-2" value={episodeOfAnime} onChange={(e) => setEpisodeOfAnime(e.target.value)} />
+          <input type="text" placeholder="x. Bölüm" className="px-4 bg-slate-50 py-2" value={episodeOfAnime} onChange={(e) => setEpisodeOfAnime(e.target.value)} />
+          <label className="font-semibold text-xl text-black mb-5">Anime Fotoğrafı</label>
+          <input type="file" onChange={(e) => setPhoto(e.target.files[0])} className="mb-5"></input>
+          <label className="font-semibold text-xl mb-5 text-black">Anime Serisi Linki</label>
+          <input type="text" placeholder="http://www.animeai.com" className="px-4 bg-slate-50 py-2" value={animeSeriesLink} onChange={(e) => setAnimeSeriesLink(e.target.value)}></input>
           <label className="font-semibold text-xl text-black mb-5">Ekleneceği Gün</label>
           <div>
             {days.map((day) => (
