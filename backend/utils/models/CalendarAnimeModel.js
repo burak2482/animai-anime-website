@@ -13,6 +13,10 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  hourOfRelease: {
+    type: String,
+    required: true,
+  },
   animeSeriesLink: {
     type: String,
     required: true,

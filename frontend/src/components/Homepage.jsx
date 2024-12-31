@@ -43,23 +43,26 @@ const Homepage = () => {
           ))}
         </div>
         <div className="flex flex-col justify-center items-center mt-10 mb-10 w-full">
-  <div className="grid grid-cols-3 gap-x-4 bg-neutral-700 rounded-lg w-full">
+  <div className="grid grid-cols-3 gap-x-4 bg-neutral-700 rounded-3xl w-full">
     {calendar.filter((anime) => anime.selectedDays.includes(activeDay)).map((anime, index) => (
       <div key={anime._id} className="flex flex-row justify-center items-center w-full rounded-lg mb-5 mt-5">
-        <div className="flex h-full flex-row items-center w-full border-4 border-white ml-4 mr-4">
+        <div className="relative flex h-full flex-row items-center w-full border-4 border-white ml-4 mr-4 rounded-full">
           <div className="h-full">
-            <img src={`/calendarphotos/${anime.photo}`} className="h-40 w-30 object-cover" alt="Anime" />
+            <img src={`/calendarphotos/${anime.photo}`} className="h-40 w-52 object-cover rounded-l-full" alt="Anime" />
           </div>
           <div className="px-3 w-full">
-            <div>
-              <h1 className="text-white font-semibold font-serif text-xl mb-3 max-w-xs">{anime.animeName}</h1>
-              <h1 className="text-white font-semibold font-mono text-xl">{anime.episodeOfAnime}</h1>
+            <div className="mr-10">
+              <h1 className="text-white font-semibold font-serif text-lg mb-3 max-w-xs text-pretty">{anime.animeName}</h1>
+              <h1 className="text-white font-semibold font-mono text-lg">{anime.episodeOfAnime}</h1>
             </div>
-            <div className="flex flex-row justify-end w-full">
+            <div className="absolute right-10 bottom-5">
               <Link to={anime.animeSeriesLink} className="text-blue-400 font-semibold text-sm underline">
                 Animeye git =>
               </Link>
             </div>
+          </div>
+          <div className="absolute top-7 right-10">
+            <h1 className="text-white font-semibold text-xl">{anime.hourOfRelease}</h1>
           </div>
         </div>
       </div>

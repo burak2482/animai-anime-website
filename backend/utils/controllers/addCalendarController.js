@@ -49,9 +49,9 @@ export const resizeCalendarPhoto = async (req, res, next) => {
 };
 
 export const addCalendarController = async (req, res) => {
-  const { animeName, episodeOfAnime, animeSeriesLink, selectedDays } = req.body;
+  const { animeName, episodeOfAnime, animeSeriesLink, hourOfRelease, selectedDays } = req.body;
 
-  if (!animeName || !episodeOfAnime || !animeSeriesLink || !req.file || !selectedDays) {
+  if (!animeName || !episodeOfAnime || !hourOfRelease || !animeSeriesLink || !req.file || !selectedDays) {
     console.log('Eksik alanlar:', { animeName, episodeOfAnime, animeSeriesLink, selectedDays });
     return res.status(400).json({ error: 'Please fill all fields.' });
   }
@@ -60,6 +60,7 @@ export const addCalendarController = async (req, res) => {
     const calendarAnime = await CalendarModel.create({
       animeName,
       episodeOfAnime,
+      hourOfRelease,
       animeSeriesLink,
       selectedDays,
       photo: req.file.name,

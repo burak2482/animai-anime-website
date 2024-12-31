@@ -5,8 +5,10 @@ const AnimeCalendar = () => {
   const [selectedDays, setSelectedDays] = useState([]);
   const [animeName, setAnimeName] = useState('');
   const [episodeOfAnime, setEpisodeOfAnime] = useState('');
+  const [hourOfRelease, setHourOfRealese] = useState('');
   const [animeSeriesLink, setAnimeSeriesLink] = useState('');
   const [photo, setPhoto] = useState(null);
+
   const [calendar, setCalendar] = useState([]);
 
   const days = [
@@ -39,6 +41,7 @@ const AnimeCalendar = () => {
     formData.append('animeName', animeName);
     formData.append('episodeOfAnime', episodeOfAnime);
     formData.append('selectedDays', selectedDays);
+    formData.append('hourOfRelease', hourOfRelease);
     formData.append('animeSeriesLink', animeSeriesLink);
     formData.append('photo', photo);
 
@@ -94,6 +97,8 @@ const AnimeCalendar = () => {
           <input type="text" placeholder="x. Bölüm" className="px-4 bg-slate-50 py-2" value={episodeOfAnime} onChange={(e) => setEpisodeOfAnime(e.target.value)} />
           <label className="font-semibold text-xl text-black mb-5">Anime Fotoğrafı</label>
           <input type="file" onChange={(e) => setPhoto(e.target.files[0])} className="mb-5"></input>
+          <label className="font-semibold text-xl text-black mb-5">Animenin Yayınlanacağı Saat</label>
+          <input type="text" placeholder="13:45" className="px-4 bg-slate-50 py-2" value={hourOfRelease} onChange={(e) => setHourOfRealese(e.target.value)}></input>
           <label className="font-semibold text-xl mb-5 text-black">Anime Serisi Linki</label>
           <input type="text" placeholder="http://www.animeai.com" className="px-4 bg-slate-50 py-2" value={animeSeriesLink} onChange={(e) => setAnimeSeriesLink(e.target.value)}></input>
           <label className="font-semibold text-xl text-black mb-5">Ekleneceği Gün</label>
@@ -127,6 +132,7 @@ const AnimeCalendar = () => {
               <th className="border py-3 px-10 md:py-6 text-xl text-center">Anime Adı</th>
               <th className="border py-3 px-10 md:py-6 text-xl text-center">Anime Bölümü</th>
               <th className="border py-3 px-10 md:py-6 text-xl text-center">Anime Günleri</th>
+              <th className="border py-3 px-10 md:py-6 text-xl text-center">Animenin Yayınlanacağı Saat</th>
               <th className="border py-3 md:py-6 px-10 text-xl text-center">Düzenle</th>
             </tr>
           </thead>
@@ -134,9 +140,10 @@ const AnimeCalendar = () => {
             {calendar.length > 0 ? (
               calendar.map((anime, index) => (
                 <tr key={anime.id || anime._id || index}>
-                  <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.animeName}</td>
-                  <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.episodeOfAnime}</td>
-                  <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4">{anime.selectedDays.join(', ')}</td>
+                  <td className="border px-2 md:px-9 text-xl font-semibold text-center py-2 md:py-4">{anime.animeName}</td>
+                  <td className="border px-2 md:px-9 text-xl font-semibold text-center py-2 md:py-4">{anime.episodeOfAnime}</td>
+                  <td className="border px-2 md:px-9 text-xl font-semibold text-center py-2 md:py-4">{anime.selectedDays.join(', ')}</td>
+                  <td className="border px-2 md:px-9 text-xl font-semibold text-center py-2 md:py-4">{anime.hourOfRelease}</td>
                   <td className="border px-2 md:px-9 text-xl font-semibold py-2 md:py-4"><button className="bg-neutral-900 text-white text-xl font-semibold px-8 py-2 rounded-lg" onClick={() => handleCalendarDelete(anime._id)}>Sil</button></td>
                 </tr>
               ))
