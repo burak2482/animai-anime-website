@@ -5,6 +5,7 @@ import axios from 'axios'
 const Homepage = () => {
   const [activeDay ,setActiveDay] = useState("Pzt");
   const [calendar, setCalendar] = useState([]);
+  const [featuredAnimeList, setFeautredAnimeList] = useState([]);
 
   const days = [
     { name: "Pzt", label: "Pzt"},
@@ -43,10 +44,10 @@ const Homepage = () => {
           ))}
         </div>
         <div className="flex flex-col justify-center items-center mt-10 mb-10 w-full">
-  <div className="grid grid-cols-3 gap-x-4 bg-neutral-700 rounded-3xl w-full">
+  <div className="grid grid-cols-3 gap-x-4 bg-neutral-800 rounded-3xl w-full">
     {calendar.filter((anime) => anime.selectedDays.includes(activeDay)).map((anime, index) => (
       <div key={anime._id} className="flex flex-row justify-center items-center w-full rounded-lg mb-5 mt-5">
-        <div className="relative flex h-full flex-row items-center w-full border-4 border-white ml-4 mr-4 rounded-full">
+        <div className="relative flex h-full flex-row items-center bg-neutral-700 w-full border-4 border-white ml-4 mr-4 rounded-full">
           <div className="h-full">
             <img src={`/calendarphotos/${anime.photo}`} className="h-40 w-52 object-cover rounded-l-full" alt="Anime" />
           </div>
@@ -71,9 +72,12 @@ const Homepage = () => {
 </div>
 
         <div>
-          <div className="bg-neutral-700 w-full h-44 mt-2">
+          <div className="bg-neutral-700 w-full h-80 mt-2">
             <div className="border-b-2">
               <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2">Öne Çıkan Animeler</h1>
+            </div>
+            <div>
+
             </div>
             <div>
             </div>

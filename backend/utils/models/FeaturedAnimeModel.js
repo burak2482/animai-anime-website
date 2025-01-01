@@ -1,19 +1,19 @@
 import mongoose from 'mongoose'
 
 const Schema = new mongoose.Schema({
-  name: {
+  nameOfAnime: {
     type: String,
-    required: true,
-  },
-  type: {
-    type: [String],
     required: true,
   },
   photo: {
     type: String,
     required: true,
   },
-  year: {
+  yearOfAnime: {
+    type: String,
+    required: true,
+  },
+  linkOfAnime: {
     type: String,
     required: true,
   },
