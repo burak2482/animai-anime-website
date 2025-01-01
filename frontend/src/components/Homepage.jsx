@@ -28,8 +28,18 @@ const Homepage = () => {
   }
  }
 
+ const getFeaturedAnime = async () => {
+  try {
+    const response = await axios.get('http://localhost:5000/user/get-featured-anime-list');
+    setFeautredAnimeList(response.data)
+  } catch (error) {
+    console.log('An error happened while fetching Featured Anime List', error)
+  }
+ }
+
  useEffect(() => {
   getCalendarInfo();
+  getFeaturedAnime();
  }, [])
 
   const isClicked = () => {
@@ -67,19 +77,22 @@ const Homepage = () => {
           </div>
         </div>
       </div>
-    ))}
-  </div>
-</div>
+      ))}
+      </div>
+    </div>
 
         <div>
-          <div className="bg-neutral-700 w-full h-80 mt-2">
+          <div className="bg-neutral-700 w-full h-full h-96 mt-2">
             <div className="border-b-2">
               <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2">Öne Çıkan Animeler</h1>
             </div>
-            <div>
-
-            </div>
-            <div>
+            <div className="flex flex-row items-center md:gap-x-0 w-full h-full">
+            {featuredAnimeList.map((anime, index) => (
+               <div key={anime._id} onClick=>
+                 <img src={`/featuredanimephotos/${anime.photo}`} className="h-64 w-48 object-cover md:mt-5 md:mb-5 md:ml-10 rounded" alt={anime.nameOfAnime} />
+                 <h1></h1>
+                </div>
+              ))}
             </div>
           </div>
         </div>
