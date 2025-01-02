@@ -10,7 +10,8 @@ export default {
         customNormal: ['MyCustomFont1', 'sans-serif'],
         customSerif: ['Bokor', 'sans-serif'],
         customJaro: ['Jaro', 'sans-serif'],
-        customJaro: ['Rubik', 'sans-serif'],
+        customBebas: ['Bebas', 'sans-serif'],
+        customRubik: ['Rubik', 'sans-serif'],
       },
       colors: {
         customBlue: '#cedef0',
