@@ -1,5 +1,6 @@
 import React, { act, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 
 const Homepage = () => {
@@ -82,15 +83,24 @@ const Homepage = () => {
     </div>
 
         <div>
-          <div className="bg-neutral-700 w-full h-full h-96 mt-2">
+          <div className="bg-neutral-700 w-full h-full h-96 mt-2 rounded-lg">
             <div className="border-b-2">
               <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2">Öne Çıkan Animeler</h1>
             </div>
-            <div className="flex flex-row items-center md:gap-x-0 w-full h-full">
-            {featuredAnimeList.map((anime, index) => (
-               <div key={anime._id} onClick=>
-                 <img src={`/featuredanimephotos/${anime.photo}`} className="h-64 w-48 object-cover md:mt-5 md:mb-5 md:ml-10 rounded" alt={anime.nameOfAnime} />
-                 <h1></h1>
+            <div className="flex flex-row group items-center md:gap-x-0 w-full h-full">
+              {featuredAnimeList.map((anime, index) => (
+                <div 
+                  key={anime._id} 
+                  onClick={() => navigate(anime.linkOfAnime)} 
+                  className="relative cursor-pointer"
+                >
+                  <img 
+                    src={`/featuredanimephotos/${anime.photo}`} 
+                    className="h-72 w-48 object-cover transform transition-transform duration-300 hover:scale-110 md:mt-5 md:mb-5 md:ml-10 rounded"
+                    alt={anime.nameOfAnime} 
+                  />
+                  <h1 className="text-white text-sm font-semibold bg-neutral-900 px-2 py-2 group-hover:scale-125 transform transition-transform duration-300 absolute left-10 bottom-10 rounded-r-md max-w-32 truncate overflow-hidden whitespace-nowrap">{anime.nameOfAnime}</h1>
+                  <h1 className="flex flex-row items-center text-black text-sm font-semibold bg-slate-200 px-2 py-1 absolute right-0 bottom-5 rounded-l-md group-hover:scale-110 transform transition-transform duration-300"><img src="/calendar.png" className="w-4 h-4 mr-0.5 group-hover:scale-110 transform transition-transform duration-300"/>{anime.yearOfAnime}</h1>
                 </div>
               ))}
             </div>
