@@ -6,6 +6,7 @@ import axios from 'axios'
 const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
   const [activeDay ,setActiveDay] = useState("Pzt");
   const [calendar, setCalendar] = useState([]);
+  const [itemsShow, setItemsShow] = useState(null);
   const [featuredAnimeList, setFeautredAnimeList] = useState([]);
 
   const days = [
@@ -49,6 +50,23 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
 
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const updateItemsShow = () => {
+      if (window.innerWidth < 768) {
+        setItemsShow(3)
+      } else {
+        setItemsShow(7)
+      }
+    };
+
+    updateItemsShow();
+    window.addEventListener('resize', updateItemsShow)
+
+    return () => {
+      window.removeEventListener('resize', updateItemsShow)
+    }
+  })
+
   return (
       <div className="flex flex-col bg-neutral-800 min-h-screen">
       <div className="md:px-80">
@@ -88,19 +106,19 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
         <div>
           <div className="bg-neutral-700 w-full h-full h-96 mt-2 rounded-lg">
            <div className="">
-            <h1 className="text-white font-customBebas text-lg tracking-wider py-6 md:text-4xl text-nowrap ml-4">Öne Çıkan Animeler</h1>
+            <h1 className="text-white md:font-customBebas font-customJaro text-lg tracking-wider py-6 md:text-4xl text-xl text-nowrap md:ml-8 ml-3">Öne Çıkan Animeler</h1>
            </div>
           <div className="relative">
             {/* Sol kaydırma butonu */}
             <button 
-              className="absolute right-20 top-[-24px] transform -translate-y-1/2 text-2xl bg-neutral-800 text-white rounded-full px-6 py-1 hover:bg-neutral-700 z-10"
+              className="absolute md:right-20 right-14 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full md:px-6 px-4 py-1 md:py-1 hover:bg-neutral-700 z-10"
               onClick={() => document.getElementById("anime-slider").scrollLeft -= 200}>
               ‹
             </button>
 
             {/* Sağ kaydırma butonu */}
             <button 
-              className="absolute right-4 top-[-24px] transform -translate-y-1/2 text-2xl bg-neutral-800 text-white rounded-full px-6 py-1 hover:bg-neutral-700 z-10"
+              className="absolute md:right-4 right-2 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full px-4 py-1 md:px-6 md:py-1 hover:bg-neutral-700 z-10"
               onClick={() => document.getElementById("anime-slider").scrollLeft += 200}>
               ›
             </button>
@@ -109,21 +127,21 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
           <div 
             id="anime-slider" 
             className="flex flex-row group items-center overflow-x-auto whitespace-nowrap scrollbar-hide w-full h-full md:gap-x-0">
-            {featuredAnimeList.slice(0,7).map((anime, index) => (
+            {featuredAnimeList.slice(0,itemsShow).map((anime, index) => (
               <div 
                 key={anime._id} 
                 onClick={() => navigate(anime.linkOfAnime)} 
                 className="relative cursor-pointer flex flex-row">
                 <img 
                   src={`/featuredanimephotos/${anime.photo}`} 
-                  className="h-72 w-48 object-cover transform transition-transform duration-300 hover:scale-110 md:mt-5 md:mb-5 md:ml-9 rounded"
+                  className="md:h-72 md:w-48 h-48 w-28 object-cover transform transition-transform duration-300 hover:scale-110 md:mt-5 md:mb-5 md:ml-9 ml-2.5 mb-2 rounded"
                   alt={anime.nameOfAnime} 
                 />
-                <h1 className="text-white text-sm font-semibold bg-neutral-900 px-2 py-2 ml-[-3px] group-hover:scale-125 transform transition-transform duration-300 absolute left-10 bottom-10 rounded-r-md max-w-32 truncate overflow-hidden whitespace-nowrap">
+                <h1 className="text-white text-sm font-semibold bg-neutral-900 left-2.5 bottom-9 px-2 py-1 md:px-2 md:py-2 md:ml-[-3px] group-hover:scale-125 transform transition-transform duration-300 absolute md:left-10 md:bottom-10 rounded-r-md max-w-24 md:max-w-32 truncate overflow-hidden whitespace-nowrap">
                   {anime.nameOfAnime}
                 </h1>
-                <h1 className="flex flex-row items-center text-black text-sm font-semibold bg-slate-200 px-2 py-1 absolute right-0 bottom-5 rounded-l-md group-hover:scale-110 transform transition-transform duration-300">
-                  <img src="/calendar.png" className="w-4 h-4 mr-0.5 group-hover:scale-110 transform transition-transform duration-300" />
+                <h1 className="flex flex-row items-center text-black text-sm font-semibold bg-slate-200 px-1 md:px-2 md:py-1 absolute right-0 bottom-2 md:right-0 md:bottom-5 rounded-l-md group-hover:scale-110 transform transition-transform duration-300">
+                  <img src="/calendar.png" className="md:w-4 md:h-4 w-3 h-3 mr-0.5 group-hover:scale-110 transform transition-transform duration-300" />
                   {anime.yearOfAnime}
                 </h1>
               </div>
