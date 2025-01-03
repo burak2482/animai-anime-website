@@ -1,7 +1,19 @@
 import mongoose from 'mongoose'
 
 const Schema = new mongoose.Schema({
-  nameOfAnime: {
+  animeName: {
+    type: String,
+    required: true,
+  },
+  animeDescription: {
+    type: String,
+    required: true,
+  },
+  animeGenres: {
+    type: Array,
+    required: true,
+  },
+  animeYear: {
     type: String,
     required: true,
   },
@@ -9,16 +21,6 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  yearOfAnime: {
-    type: String,
-    required: true,
-  },
-  linkOfAnime: {
-    type: String,
-    required: true,
-  },
-});
+})
 
-const FeaturedAnimeModel = mongoose.model("anime", Schema)
-
-export default FeaturedAnimeModel;
+const AnimeHomePageModel = new mongoose.model('AnimeHomePageModel', Schema)

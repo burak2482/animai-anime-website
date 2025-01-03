@@ -6,7 +6,7 @@ const Header = ({isCalendarOpen, setIsCalendarOpen}) => {
     <div className="bg-neutral-800">
       <div className="md:px-80 md:py-8">
         <div className="bg-neutral-700 flex flex-row justify-between items-center py-5">
-          <div>
+          <div className="">
             <h1 className="font-customRubik text-white text-2xl md:text-5xl ml-4 tracking-wide md:ml-12 items-center">ANIMAI</h1>
           </div>
           <div className="hidden sm:block w-1/3 flex flex-row items-center relative">

@@ -19,7 +19,7 @@ const AdminPanel = () => {
           Öne çıkan anime ekle/sil
       </Link>
        <Link 
-          to="/user/account-edit" 
+          to="/user/add-anime" 
           className="flex justify-center items-center w-full h-16 bg-slate-800 font-customNormal text-white font-medium text-lg tracking-wide text-nowrap underline">
            <img 
             src="/add.png" 
