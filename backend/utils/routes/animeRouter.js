@@ -6,7 +6,8 @@ import { deleteCalendarController } from '../controllers/deleteCalendarControlle
 import { addFeaturedAnime, uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto } from '../controllers/addFeaturedAnimeController.js';
 import { deleteFeaturedAnime } from '../controllers/deleteFeaturedAnime.js';
 import { getAnimeVideoController } from '../controllers/getAnimeVideoController.js'
-import { addAnimeVideoController } from '../controllers/addAnimeVideoController.js';
+import { addAnimeVideoController, addAnimeVideoImage, resizeAnimeVideoImage } from '../controllers/addAnimeVideoController.js';
+import { addAnimeHomePageController, resizeAnimeHomePagePhoto, uploadAnimeHomePagePhoto } from '../controllers/addAnimeHomePageController.js';
 
 const router = express.Router();
 
@@ -20,7 +21,9 @@ router.post('/add-calendar', uploadCalendarPhoto, resizeCalendarPhoto, addCalend
 
 router.post('/add-featured-anime', uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto, addFeaturedAnime)
 
-router.post('/add-anime-video', addAnimeVideoController)
+router.post('/add-anime-home-page', uploadAnimeHomePagePhoto, resizeAnimeHomePagePhoto, addAnimeHomePageController)
+
+router.post('/add-anime-video',addAnimeVideoImage, resizeAnimeVideoImage, addAnimeVideoController)
 
 router.delete('/delete-calendar/:id', deleteCalendarController)
 

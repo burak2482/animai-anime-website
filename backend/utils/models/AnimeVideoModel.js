@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const Schema = new mongoose.Schema({
+const AnimeSchema = new mongoose.Schema({
   animeName: {
     type: String,
     required: true,
@@ -19,6 +19,6 @@ const Schema = new mongoose.Schema({
   },
 })
 
-const AnimeVideoModel = new mongoose.model('animeVideo', Schema )
+const AnimeVideoModel = new mongoose.model('animeVideo', AnimeSchema )
 
 export default AnimeVideoModel;

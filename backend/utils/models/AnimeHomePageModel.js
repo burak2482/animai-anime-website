@@ -24,3 +24,5 @@ const Schema = new mongoose.Schema({
 })
 
 const AnimeHomePageModel = new mongoose.model('AnimeHomePageModel', Schema)
+
+export default AnimeHomePageModel

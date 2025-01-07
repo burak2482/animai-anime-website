@@ -23,7 +23,7 @@ const multerFilter = (req,file,cb) => {
 
 const upload = multer({
   storage: multerStorage,
-  filter: multerFilter,
+  fileFilter: multerFilter,
 });
 
 export const uploadFeaturedAnimePhoto = upload.single('photo');
