@@ -61,6 +61,17 @@ const AddAnime = () => {
       setFilteredAnimeList(filteredAnimeList);
     }
   };
+
+  const handleDelete = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5000/user/delete-anime-video/${id}`);
+      setAnimeList((animeList) => animeList.filter((anime) => anime.id !== id));
+      getAnimeList();
+    } catch (err) {
+      console.log("Error happened while deleting Anime info:", err.response?.data || err.message);
+    }
+  };
+
   
 
   return (
@@ -79,13 +90,13 @@ const AddAnime = () => {
         </form>
       </section>
       <section className="flex flex-col justify-center items-center mb-10 mt-10">
-       <input type="text" placeholder='Anime ara..' className="bg-slate-100 w-full text-black rounded-lg py-2 px-4 mb-4" value={animeSearch} onChange={handleSearch}/>
+       <input type="text" placeholder='Anime ara..' className="bg-slate-100 w-full text-black rounded-lg py-2 px-4 mb-10" value={animeSearch} onChange={handleSearch}/>
        <table className="w-1/4 h-full bg-slate-50">
           <thead>
             <tr>
-              <th>Anime İsmi</th>
-              <th>Anime Bölümü</th>
-              <th>Düzenle</th>
+              <th className="font-semibold text-xl text-center px-16">Anime İsmi</th>
+              <th className="font-semibold text-xl text-center px-16">Anime Bölümü</th>
+              <th className="font-semibold text-xl text-center px-16">Düzenle</th>
             </tr>
           </thead>
           <tbody>
@@ -94,11 +105,11 @@ const AddAnime = () => {
                 <td colSpan="3">Henüz bir anime yok.</td>
               </tr>
             ) : (
-              filteredAnimeList.map((anime, index) => (
-                <tr key={index}>
-                  <td>{anime.animeName}</td>
-                  <td>{anime.animeEpisode}</td>
-                  <td><button>Sil</button></td>
+              filteredAnimeList.map((anime,index) => (
+                <tr key={index} className="">
+                  <td className="font-semibold text-xl text-center w-full">{anime.animeName}</td>
+                  <td className="font-semibold text-xl text-center w-full">{anime.animeEpisode}</td>
+                  <td className="font-semibold text-xl text-center w-full"><button onClick={() => handleDelete(anime._id)}className="justify-center items-center bg-neutral-900 py-2 px-6 rounded-lg text-white font-semibold mb-4">Sil</button></td>
                 </tr>
               ))
             )}
