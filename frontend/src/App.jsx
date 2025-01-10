@@ -9,6 +9,7 @@ import { useState } from 'react';
 import Header from './components/Header.jsx';
 import AnimeVideoPage from './components/AnimeVideoPage.jsx';
 import AddAnime from './components/admin-pages/AddAnime.jsx';
+import AddAnimeHomePage from './components/admin-pages/AddAnimeHomePage.jsx';
 
 function App() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -20,7 +21,8 @@ function App() {
           <Route path="/pages/admin-page-home" element={<AdminPageHome />} />
           <Route path="/user/adjust-featured-animes" element={<FeaturedAnimeList />} />
           <Route path="/user/edit-calendar" element={<AnimeCalendar />} />
-          <Route path="/user/add-anime" element={<AddAnime />} />
+          <Route path="/user/add-anime-home-page" element={<AddAnimeHomePage/> } />
+          <Route path="/user/add-anime" element={<AddAnime />} /> 
         </Route>
         <Route element={<HomePageLayout isCalendarOpen={isCalendarOpen} setIsCalendarOpen={setIsCalendarOpen} />}>
           <Route path="/" element={<Homepage isCalendarOpen={isCalendarOpen} setIsCalendarOpen={setIsCalendarOpen} />} />

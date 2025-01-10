@@ -9,7 +9,11 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  animeGenres: {
+  animeEpisode: {
+    type: String,
+    required: true,
+  },
+  selectedGenres: {
     type: Array,
     required: true,
   },

@@ -8,6 +8,7 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
   const [calendar, setCalendar] = useState([]);
   const [itemsShow, setItemsShow] = useState(null);
   const [featuredAnimeList, setFeautredAnimeList] = useState([]);
+  const [animeHomePageList, setAnimeHomePageList] = useState([]);
 
   const days = [
     { name: "Pzt", label: "Pzt"},
@@ -31,6 +32,7 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
  }
 
  const getFeaturedAnime = async () => {
+
   try {
     const response = await axios.get('http://localhost:5000/user/get-featured-anime-list');
     setFeautredAnimeList(response.data)
@@ -39,9 +41,20 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
   }
  }
 
+ const getAnimeHomePageList = async () => {
+
+  try {
+    const response = await axios.get('http://localhost:5000/user/get-anime-home-page');
+    setAnimeHomePageList(response.data)
+  } catch (error) {
+    console.log('An error happened while getting anime home page list!', error)
+  }
+ }
+
  useEffect(() => {
   getCalendarInfo();
   getFeaturedAnime();
+  getAnimeHomePageList();
  }, [])
 
   const isClicked = () => {
@@ -109,14 +122,12 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
             <h1 className="text-white md:font-customBebas font-customJaro text-lg tracking-wider py-6 md:text-4xl text-xl text-nowrap md:ml-8 ml-3">Öne Çıkan Animeler</h1>
            </div>
           <div className="relative">
-            {/* Sol kaydırma butonu */}
             <button 
               className="absolute md:right-20 right-14 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full md:px-6 px-4 py-1 md:py-1 hover:bg-neutral-700 z-10"
               onClick={() => document.getElementById("anime-slider").scrollLeft -= 200}>
               ‹
             </button>
 
-            {/* Sağ kaydırma butonu */}
             <button 
               className="absolute md:right-4 right-2 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full px-4 py-1 md:px-6 md:py-1 hover:bg-neutral-700 z-10"
               onClick={() => document.getElementById("anime-slider").scrollLeft += 200}>
@@ -149,24 +160,30 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
           </div>
           </div>
         </div>
-        <div>
+        <section>
           <div className="bg-neutral-700 w-full h-96 mt-2">
-            <div className="border-b-2">
+            <section className="border-b-2">
               <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2">Popüler Animelerden Son Bölümler</h1>
-            </div>
+            </section>
             <div>
             </div>
           </div>
-        </div>
-        <div>
-          <div className="bg-neutral-700 w-full h-44 mt-2">
-            <div className="border-b-2">
-              <h1 className="text-white text-lg md:text-2xl text-nowrap ml-2 py-2">Yeni Eklenen Animeler</h1>
-            </div>
-            <div>
-            </div>
+        </section>
+        <section>
+          <div className="bg-neutral-700 w-full h-96 mt-2 rounded-lg">
+            <section Name="border-b-2">
+              <h1 className="text-white font-customBebas tracking-wider md:text-4xl text-nowrap ml-6 py-6 mb-5">Yeni Eklenen Animeler</h1>
+            </section>
+            <section className="flex flex-row"> 
+              {animeHomePageList.map((anime,index) => (
+                <div key={anime._id} className="relative flex flex-row">
+                  <img src={`/animehomepagephotos/${anime.photo}`} className="md:h-72 md:w-48 object-cover" alt={anime.animeName}  />
+                  <h1 className="px-2 py-2 bg-neutral-900 text-white font-semibold text-lg">{anime.animeName}</h1>
+                </div>
+              ))}
+            </section>
           </div>
-        </div>
+        </section>
         <div>
           <div className="bg-neutral-700 w-full h-96 mt-2">
             <div className="flex flex-row items-center justify-between border-b-2 py-2">
