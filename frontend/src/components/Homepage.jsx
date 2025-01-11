@@ -1,4 +1,4 @@
-import React, { act, useEffect, useState } from 'react'
+import React, { act, useEffect, useState, useRef } from 'react'
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
@@ -63,22 +63,26 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
 
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const updateItemsShow = () => {
-      if (window.innerWidth < 768) {
-        setItemsShow(3)
-      } else {
-        setItemsShow(7)
-      }
-    };
+  const animeHomePageSliderRef = useRef();
+  
+  const featuredAnimeSliderRef = useRef();
 
-    updateItemsShow();
-    window.addEventListener('resize', updateItemsShow)
 
-    return () => {
-      window.removeEventListener('resize', updateItemsShow)
-    }
-  })
+  const scrollAnimeHomePageLeft = () => {
+    animeHomePageSliderRef.current.scrollLeft -= 300;
+  }
+
+  const scrollAnimeHomePageRight = () => {
+    animeHomePageSliderRef.current.scrollLeft += 300;
+  }
+
+  const scrollFeaturedAnimeLeft = () => {
+    featuredAnimeSliderRef.current.scrollLeft -= 300;
+  }
+
+  const scrollFeaturedAnimeRight = () => {
+    featuredAnimeSliderRef.current.scrollLeft += 300;
+  }
 
   return (
       <div className="flex flex-col bg-neutral-800 min-h-screen">
@@ -117,32 +121,21 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
     </div>
 
         <div>
-          <div className="bg-neutral-700 w-full h-full h-96 mt-2 rounded-lg">
+          <div className="bg-neutral-700 w-full h-full  mt-2 rounded-lg">
            <div className="">
             <h1 className="text-white md:font-customBebas font-customJaro text-lg tracking-wider py-6 md:text-4xl text-xl text-nowrap md:ml-8 ml-3">Öne Çıkan Animeler</h1>
            </div>
-          <div className="relative">
-            <button 
-              className="absolute md:right-20 right-14 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full md:px-6 px-4 py-1 md:py-1 hover:bg-neutral-700 z-10"
-              onClick={() => document.getElementById("anime-slider").scrollLeft -= 200}>
-              ‹
-            </button>
-
-            <button 
-              className="absolute md:right-4 right-2 top-[-36px] transform -translate-y-1/2 md:text-2xl text-xl bg-neutral-800 text-white text-center rounded-full px-4 py-1 md:px-6 md:py-1 hover:bg-neutral-700 z-10"
-              onClick={() => document.getElementById("anime-slider").scrollLeft += 200}>
-              ›
-            </button>
-          </div>
-
+           <div className="relative">
+            <button onClick={scrollFeaturedAnimeLeft} className="absolute right-24 top-[-50px] bg-neutral-800 text-white font-semibold text-3xl rounded-full px-8 py-1">‹</button>
+            <button onClick={scrollFeaturedAnimeRight} className="absolute right-4 top-[-50px] bg-neutral-800 text-white font-semibold text-3xl rounded-full px-8 py-1">›</button>
+           </div>
           <div 
-            id="anime-slider" 
-            className="flex flex-row group items-center overflow-x-auto whitespace-nowrap scrollbar-hide w-full h-full md:gap-x-0">
-            {featuredAnimeList.slice(0,itemsShow).map((anime, index) => (
+            className="flex flex-row items-center overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth w-full h-full md:gap-x-0" ref={featuredAnimeSliderRef}> 
+            {featuredAnimeList.slice(0,18).map((anime, index) => (
               <div 
-                key={anime._id} 
+                key={anime._id}
                 onClick={() => navigate(anime.linkOfAnime)} 
-                className="relative cursor-pointer flex flex-row">
+                className="relative cursor-pointer group scrollbar-hide whitespace-nowrap flex-shrink-0 overflow-x-auto flex flex-row">
                 <img 
                   src={`/featuredanimephotos/${anime.photo}`} 
                   className="md:h-72 md:w-48 h-48 w-28 object-cover transform transition-transform duration-300 hover:scale-110 md:mt-5 md:mb-5 md:ml-9 ml-2.5 mb-2 rounded"
@@ -162,7 +155,7 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
         </div>
         <section>
           <div className="bg-neutral-700 w-full h-96 mt-2">
-            <section className="border-b-2">
+            <section className="">
               <h1 className="text-white py-2 text-lg md:text-2xl text-nowrap ml-2">Popüler Animelerden Son Bölümler</h1>
             </section>
             <div>
@@ -170,15 +163,20 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
           </div>
         </section>
         <section>
-          <div className="bg-neutral-700 w-full h-96 mt-2 rounded-lg">
-            <section Name="border-b-2">
-              <h1 className="text-white font-customBebas tracking-wider md:text-4xl text-nowrap ml-6 py-6 mb-5">Yeni Eklenen Animeler</h1>
+          <div className="relative bg-neutral-700 w-full h-full mt-2 rounded-lg scrollbar-hide">
+            <section className="">
+              <h1 className="text-white font-customBebas tracking-wider md:text-4xl text-nowrap ml-8 py-6 mb-5">Yeni Eklenen Animeler</h1>
             </section>
-            <section className="flex flex-row"> 
-              {animeHomePageList.map((anime,index) => (
-                <div key={anime._id} className="relative flex flex-row">
-                  <img src={`/animehomepagephotos/${anime.photo}`} className="md:h-72 md:w-48 object-cover" alt={anime.animeName}  />
-                  <h1 className="px-2 py-2 bg-neutral-900 text-white font-semibold text-lg">{anime.animeName}</h1>
+            <button onClick={scrollAnimeHomePageLeft} className="absolute right-24 top-8 bg-neutral-800 text-white font-semibold text-3xl rounded-full px-8 py-1">‹</button>
+            <button onClick={scrollAnimeHomePageRight} className="absolute right-4 top-8 bg-neutral-800 text-white font-semibold text-3xl rounded-full px-8 py-1">›</button>
+
+            <section className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth" ref={animeHomePageSliderRef}>
+              {animeHomePageList.slice(0,18).map((anime,index) => (
+                <div key={anime._id} className="relative flex flex-row flex-shrink-0 group cursor-pointer">
+                  <img src={`/animehomepagephotos/${anime.photo}`} className="md:h-72 md:w-48 object-cover ml-9 mb-5 rounded transform transition-transform duration-300 hover:scale-105 "alt={anime.animeName}  />
+                  <h1 className="absolute bottom-12 left-9 px-2 py-1 bg-neutral-900 text-white font-semibold text-lg max-w-28 overflow-hidden transform transition-transform duration-300 group-hover:scale-110 whitespace-nowrap truncate rounded-r-lg">{anime.animeName}</h1>
+                  <h1 className="flex flex-row whitespace-nowrap items-center justify-center text-black bg-white font-semibold bottom-8 right-0 text-md rounded-l-lg absolute px-2 py-1 transform transition-transform duration-300 group-hover:scale-110"><img src="./calendar.png" className="h-3 w-3 object-cover mr-1"/>{anime.animeYear}</h1>
+                  <h1 className="absolute top-0 right-0 text-md text-white bg-red-500 font-semibold rounded-l-lg px-2 py-1 transform transition-transform duration-300 group-hover:scale-110 ">{anime.animeEpisode}</h1>
                 </div>
               ))}
             </section>
