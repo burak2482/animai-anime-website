@@ -1,5 +1,6 @@
 import React from 'react'
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
+
 
 const Header = ({isCalendarOpen, setIsCalendarOpen}) => {
   return (
@@ -7,7 +8,7 @@ const Header = ({isCalendarOpen, setIsCalendarOpen}) => {
       <div className="md:px-80 md:py-8">
         <div className="bg-neutral-700 flex flex-row justify-between items-center py-5">
           <div className="">
-            <h1 className="font-customRubik text-white text-2xl md:text-5xl ml-4 tracking-wide md:ml-12 items-center">ANIMAI</h1>
+            <Link to="/" className="font-customRubik text-white text-2xl md:text-5xl ml-4 tracking-wide md:ml-12 items-center">ANIMAI</Link>
           </div>
           <div className="hidden sm:block w-1/3 flex flex-row items-center relative">
             <input type="text" placeholder="aramak istediğiniz animeyi arayın.." className="bg-white py-2 w-3/4 px-12 text-lg ml-16 text-nowrap font-semibold rounded-lg"></input>

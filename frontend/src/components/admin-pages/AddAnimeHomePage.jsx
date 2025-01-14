@@ -8,7 +8,7 @@ const AddAnimeHomePage = () => {
   const [animeName, setAnimeName] = useState('');
   const [animeYear, setAnimeYear] = useState('');
   const [animeDescription, setAnimeDescription] = useState('');
-  const [animeEpisode, setAnimeEpisode] = useState('');
+  const [animeTotalEpisode, setAnimeTotalEpisode] = useState('');
   const [photo, setPhoto] = useState(null);
 
   const genres = [
@@ -48,7 +48,7 @@ const AddAnimeHomePage = () => {
   const addAnimeHomePageFunc = async (e) => {
     e.preventDefault();
 
-    if(!animeName || !animeEpisode || !animeYear || !animeDescription ) {
+    if(!animeName || !animeTotalEpisode || !animeYear || !animeDescription ) {
       console.log('Please fill all the fields, all fields are required!');
       return;
     }
@@ -56,7 +56,7 @@ const AddAnimeHomePage = () => {
     const formData = new FormData();
     formData.append('animeName', animeName)
     formData.append('animeYear', animeYear)
-    formData.append('animeEpisode', animeEpisode)
+    formData.append('animeTotalEpisode', animeTotalEpisode)
     formData.append('animeDescription', animeDescription)
     formData.append('selectedGenres', selectedGenres);
     formData.append('photo', photo)
@@ -104,7 +104,7 @@ const AddAnimeHomePage = () => {
             className="py-2 bg-slate-100 rounded-lg px-8"
           />
           <label className="text-2xl text-black font-semibold">Anime Bölümü</label>
-          <input type="text" value={animeEpisode} onChange={(e) => setAnimeEpisode(e.target.value)} className="py-2 bg-slate-100 w-full px-4 rounded-lg"/>
+          <input type="text" value={animeTotalEpisode} onChange={(e) => setAnimeTotalEpisode(e.target.value)} className="py-2 bg-slate-100 w-full px-4 rounded-lg"/>
           <label className="text-2xl text-black font-semibold">Anime Fotoğrafı</label>
           <input
             type="file"
@@ -136,6 +136,7 @@ const AddAnimeHomePage = () => {
               <th className="border py-3 px-10 font-semibold text-2xl text-center">Anime İsmi</th>
               <th className="border py-3 px-10 font-semibold text-2xl text-center">Anime Bölümü</th>
               <th className="border py-3 px-10 font-semibold text-2xl text-center">Anime Türleri</th>
+              <th className="border py-3 px-10 font-semibold text-2xl text-center">Anime ID</th>
               <th className="border py-3 px-10 font-semibold text-2xl text-center">Düzenle</th>
             </tr>
           </thead>
@@ -143,8 +144,9 @@ const AddAnimeHomePage = () => {
             {animeList.map((anime, index) => (
               <tr key={index}>
                 <td className="font-semibold text-lg text-center">{anime.animeName}</td>
-                <td className="font-semibold text-lg text-center">{anime.animeEpisode}</td>
+                <td className="font-semibold text-lg text-center">{anime.animeTotalEpisode}</td>
                 <td className="font-semibold text-lg text-center">{anime.selectedGenres?.join(", ")}</td>
+                <td className="font-semibold text-lg text-center">{anime._id}</td>
                 <td className="flex flex-col justify-center items-center">
                   <button className="py-2 px-8 bg-neutral-900 text-white font-semibold text-xl mt-2 mb-2 rounded-lg" onClick={() => handleDelete(anime._id)}>Sil</button>
                 </td>

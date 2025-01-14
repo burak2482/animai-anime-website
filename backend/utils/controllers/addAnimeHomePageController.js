@@ -46,9 +46,9 @@ export const resizeAnimeHomePagePhoto = async (req,res,next) => {
 }
 
 export const addAnimeHomePageController = async (req,res) => {
-  const {animeName,selectedGenres,animeYear,animeDescription,animeEpisode} = req.body;
+  const {animeName,selectedGenres,animeYear,animeDescription,animeTotalEpisode} = req.body;
 
-  if (!animeName || !selectedGenres || !animeYear || !animeDescription || !animeEpisode || !req.file) {
+  if (!animeName || !selectedGenres || !animeYear || !animeDescription || !animeTotalEpisode || !req.file) {
     return res.status(400).json('You need to fill all fields!')
   }
 
@@ -57,8 +57,8 @@ export const addAnimeHomePageController = async (req,res) => {
       animeName,
       selectedGenres,
       animeYear,
+      animeTotalEpisode,
       animeDescription,
-      animeEpisode,
       photo: req.file.name,
     })
     res.status(200).json(animeHomePageEvent)

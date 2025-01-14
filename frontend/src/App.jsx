@@ -10,6 +10,7 @@ import Header from './components/Header.jsx';
 import AnimeVideoPage from './components/AnimeVideoPage.jsx';
 import AddAnime from './components/admin-pages/AddAnime.jsx';
 import AddAnimeHomePage from './components/admin-pages/AddAnimeHomePage.jsx';
+import AnimeHomePage from './components/AnimeHomePage.jsx';
 
 function App() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
@@ -27,6 +28,7 @@ function App() {
         <Route element={<HomePageLayout isCalendarOpen={isCalendarOpen} setIsCalendarOpen={setIsCalendarOpen} />}>
           <Route path="/" element={<Homepage isCalendarOpen={isCalendarOpen} setIsCalendarOpen={setIsCalendarOpen} />} />
           <Route path="/anime-video-page" element={<AnimeVideoPage />} />
+          <Route path="/anime/:id" element={<AnimeHomePage />} />
         </Route>
       </Routes>
     </Router>

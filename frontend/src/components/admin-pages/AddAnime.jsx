@@ -3,17 +3,17 @@ import axios from 'axios'
 
 const AddAnime = () => {
   const [animeList, setAnimeList] = useState([]);
-  const [animeName, setAnimeName] = useState('');
+  const [episodeTitle, setEpisodeTitle] = useState('');
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
   const [animeSearch, setAnimeSearch] = useState('');
-  const [animeEmbedCode, setAnimeEmbedCode] = useState('');
+  const [embedLink, setEmbedLink] = useState('');
+  const [animeID, setAnimeID] = useState('');
   const [animeHomePageLink, setAnimeHomePageLink] = useState('');
-  const [animeEpisode, setAnimeEpisode] = useState('');
+  const [episodeNumber, setEpisodeNumber] = useState('');
 
   const getAnimeList = async () => {
     try {
       const animeListResponse = await axios.get('http://localhost:5000/user/get-anime-video')
-      console.log('Anime Listesi:', animeListResponse.data);
       setAnimeList(animeListResponse.data);
       setFilteredAnimeList(animeListResponse.data);
     } catch (err) {
@@ -28,19 +28,19 @@ const AddAnime = () => {
   const addAnimeVideo = async (e) => {
     e.preventDefault();
 
-    if (!animeName || !animeEpisode || !animeHomePageLink || !animeEmbedCode) {
+    if (!episodeNumber || !embedLink || !episodeTitle) {
       console.log('Please fill all the fields, all fields are required!');
       return;
     }
 
-    const formData = new FormData();
-    formData.append('animeName', animeName)
-    formData.append('animeEmbedCode', animeEmbedCode)
-    formData.append('animeHomePageLink', animeHomePageLink)
-    formData.append('animeEpisode', animeEpisode)
+    const formData = {
+      episodeNumber,
+      episodeTitle,
+      embedLink,
+    }
 
     try {
-      const addAnimeVideo = await axios.post('http://localhost:5000/user/add-anime-video', formData)
+      const addAnimeVideo = await axios.post(`http://localhost:5000/user/add-anime-video/${animeID}`, formData)
       getAnimeList();
       console.log('Anime Listesi:', animeList);
     } catch (err) {
@@ -78,14 +78,14 @@ const AddAnime = () => {
     <main className="flex flex-col justify-center items-center mt-[-50px]">
       <section className="">
         <form className="flex flex-col gap-y-8" onSubmit={addAnimeVideo}>
-          <label className="text-xl font-semibold font-mono text-black">Anime Adı</label>
-          <input type="text" value={animeName} onChange={(e) => setAnimeName(e.target.value)} className="bg-slate-100 py-1 rounded-lg" />
+          <label className="text-xl font-semibold font-mono text-black">Bölüm Adı</label>
+          <input type="text" value={episodeTitle} onChange={(e) => setEpisodeTitle(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
           <label className="text-xl font-semibold font-mono text-black">Anime Embed Kodu</label>
-          <input type="text" value={animeEmbedCode} onChange={(e) => setAnimeEmbedCode(e.target.value)} className="bg-slate-100 py-1 rounded-lg" />
-          <label className="text-xl font-semibold font-mono text-black">Anime Ana Sayfası Linki</label>
-          <input type="text" value={animeHomePageLink} onChange={(e) => setAnimeHomePageLink(e.target.value)}className="bg-slate-100 py-1 rounded-lg" />
-          <label className="text-xl font-semibold font-mono text-black">Anime Bölümü</label>
-          <input type="text" value={animeEpisode} onChange={(e) => setAnimeEpisode(e.target.value)} placeholder="x.Bölüm" className="bg-slate-100 py-1 px-3 rounded-lg" />
+          <input type="text" value={embedLink} onChange={(e) => setEmbedLink(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
+          <label className="text-xl font-semibold font-mono text-black">Anime ID</label>
+          <input type="text" value={animeID} onChange={(e) => setAnimeID(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
+          <label className="text-xl font-semibold font-mono text-black">Bölüm Numarası</label>
+          <input type="text" value={episodeNumber} onChange={(e) => setEpisodeNumber(e.target.value)} placeholder="x.Bölüm" className="bg-slate-100 py-1 px-4 rounded-lg" />
           <button type="submit" className="px-16 py-2 rounded-full bg-neutral-900 font-semibold text-white text-xl mt-5">Ekle</button>
         </form>
       </section>
@@ -94,25 +94,34 @@ const AddAnime = () => {
        <table className="w-1/4 h-full bg-slate-50">
           <thead>
             <tr>
-              <th className="font-semibold text-xl text-center px-16">Anime İsmi</th>
-              <th className="font-semibold text-xl text-center px-16">Anime Bölümü</th>
+              <th className="font-semibold text-xl text-center px-16">Bölüm İsmi</th>
+              <th className="font-semibold text-xl text-center px-16">Bölüm Numarası</th>
               <th className="font-semibold text-xl text-center px-16">Düzenle</th>
             </tr>
           </thead>
           <tbody>
-            {filteredAnimeList.length === 0 ? (
-              <tr>
-                <td colSpan="3">Henüz bir anime yok.</td>
-              </tr>
-            ) : (
-              filteredAnimeList.map((anime,index) => (
-                <tr key={index} className="">
-                  <td className="font-semibold text-xl text-center w-full">{anime.animeName}</td>
-                  <td className="font-semibold text-xl text-center w-full">{anime.animeEpisode}</td>
-                  <td className="font-semibold text-xl text-center w-full"><button onClick={() => handleDelete(anime._id)}className="justify-center items-center bg-neutral-900 py-2 px-6 rounded-lg text-white font-semibold mb-4">Sil</button></td>
+          {filteredAnimeList.length === 0 ? (
+            <tr>
+              <td colSpan="3">Henüz bir anime yok.</td>
+            </tr>
+          ) : (
+            filteredAnimeList.map((anime, index) => (
+              anime.animeEpisodes.map((episode, episodeIndex) => (
+                <tr key={`${index}-${episodeIndex}`} className="">
+                  <td className="font-semibold text-xl text-center w-full">{episode.episodeTitle}</td>
+                  <td className="font-semibold text-xl text-center w-full">{episode.episodeNumber}</td>
+                  <td className="font-semibold text-xl text-center w-full">
+                    <button
+                      onClick={() => handleDelete(anime._id)}
+                      className="justify-center items-center bg-neutral-900 py-2 px-6 rounded-lg text-white font-semibold mb-4"
+                    >
+                      Sil
+                    </button>
+                  </td>
                 </tr>
               ))
-            )}
+            ))
+          )}
           </tbody>
         </table>
       </section>

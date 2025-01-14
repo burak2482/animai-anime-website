@@ -1,10 +1,10 @@
-import AnimeVideoModel from "../models/AnimeVideoModel.js";
+import AnimeHomePageModel from '../models/AnimeHomePageModel.js'
 import multer from 'multer'
 import sharp from 'sharp'
 import mongoose from 'mongoose'
 import path from 'path'
 
-const multerStorage = multer.diskStorage({
+/*const multerStorage = multer.diskStorage({
   destination: (req,file,cb) => {
     cb(null, '../frontend/public/animevideophotos')
   },
@@ -46,22 +46,35 @@ export const resizeAnimeVideoImage = async (req,res,next) => {
   }
 }
 
+*/
+
 
 export const addAnimeVideoController = async (req,res) => {
-  const {animeName,animeEmbedCode,animeHomePageLink,animeEpisode} = req.body;
+  const {episodeNumber, episodeTitle, embedLink} = req.body;
 
-  if(!animeName || !animeEmbedCode || !animeHomePageLink) {
+  const {id} = req.params;
+
+
+  if(!episodeNumber || !episodeTitle || !embedLink) {
     return res.status(400).json('Please fill the all fields!')
   }
 
   try {
-    const animeVideo = await AnimeVideoModel.create({
-      animeName,
-      animeEmbedCode,
-      animeHomePageLink,
-      animeEpisode,
-    })
-    res.status(200).json(animeVideo)
+    const updatedAnime = await AnimeHomePageModel.findByIdAndUpdate(
+      id,
+      {
+        $push: {
+          animeEpisodes: { episodeNumber, episodeTitle, embedLink },
+        },
+      },
+      { new: true, runValidators: true }
+    );
+
+    if(!updatedAnime) {
+      return res.status(404).json("Can't find the anime!.")
+    }
+
+    res.status(200).json(updatedAnime)
   } catch (error) {
     console.log(error)
     res.status(400).json({ message: 'An error happened while creating AnimeVideoModel', error })

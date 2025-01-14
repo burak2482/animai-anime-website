@@ -172,11 +172,11 @@ const Homepage = ({setIsCalendarOpen, isCalendarOpen}) => {
 
             <section className="flex flex-row overflow-x-auto whitespace-nowrap scrollbar-hide scroll-smooth" ref={animeHomePageSliderRef}>
               {animeHomePageList.slice(0,18).map((anime,index) => (
-                <div key={anime._id} className="relative flex flex-row flex-shrink-0 group cursor-pointer">
+                <div key={anime._id} className="relative flex flex-row flex-shrink-0 group cursor-pointer" onClick={() => navigate(`/anime/${anime._id}`)}>
                   <img src={`/animehomepagephotos/${anime.photo}`} className="md:h-72 md:w-48 object-cover ml-9 mb-5 rounded transform transition-transform duration-300 hover:scale-105 "alt={anime.animeName}  />
                   <h1 className="absolute bottom-12 left-9 px-2 py-1 bg-neutral-900 text-white font-semibold text-lg max-w-28 overflow-hidden transform transition-transform duration-300 group-hover:scale-110 whitespace-nowrap truncate rounded-r-lg">{anime.animeName}</h1>
                   <h1 className="flex flex-row whitespace-nowrap items-center justify-center text-black bg-white font-semibold bottom-8 right-0 text-md rounded-l-lg absolute px-2 py-1 transform transition-transform duration-300 group-hover:scale-110"><img src="./calendar.png" className="h-3 w-3 object-cover mr-1"/>{anime.animeYear}</h1>
-                  <h1 className="absolute top-0 right-0 text-md text-white bg-red-500 font-semibold rounded-l-lg px-2 py-1 transform transition-transform duration-300 group-hover:scale-110 ">{anime.animeEpisode}</h1>
+                  <h1 className="absolute top-0 right-0 text-md text-white bg-red-500 font-semibold rounded-l-lg px-2 py-1 transform transition-transform duration-300 group-hover:scale-110 ">{anime.animeTotalEpisode}</h1>
                 </div>
               ))}
             </section>

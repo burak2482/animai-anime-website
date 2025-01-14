@@ -6,11 +6,12 @@ import { deleteCalendarController } from '../controllers/deleteCalendarControlle
 import { addFeaturedAnime, uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto } from '../controllers/addFeaturedAnimeController.js';
 import { deleteFeaturedAnime } from '../controllers/deleteFeaturedAnime.js';
 import { getAnimeVideoController } from '../controllers/getAnimeVideoController.js'
-import { addAnimeVideoController, addAnimeVideoImage, resizeAnimeVideoImage } from '../controllers/addAnimeVideoController.js';
+import { addAnimeVideoController} from '../controllers/addAnimeVideoController.js';
 import { addAnimeHomePageController, resizeAnimeHomePagePhoto, uploadAnimeHomePagePhoto } from '../controllers/addAnimeHomePageController.js';
 import { deleteAnimeVideoController } from '../controllers/deleteAnimeVideoController.js';
 import { getAnimeHomePageController } from '../controllers/getAnimeHomePageController.js';
 import { deleteAnimeHomePageController } from '../controllers/deleteAnimeHomePageController.js';
+import { getApiAnimeHomePage } from '../controllers/getApiAnimeHomePageController.js';
 
 const router = express.Router();
 
@@ -22,13 +23,15 @@ router.get('/get-anime-video', getAnimeVideoController)
 
 router.get('/get-anime-home-page', getAnimeHomePageController)
 
+router.get('/api/get-anime-home-page/:id', getApiAnimeHomePage)
+
 router.post('/add-calendar', uploadCalendarPhoto, resizeCalendarPhoto, addCalendarController)
 
 router.post('/add-featured-anime', uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto, addFeaturedAnime)
 
 router.post('/add-anime-home-page', uploadAnimeHomePagePhoto, resizeAnimeHomePagePhoto, addAnimeHomePageController)
 
-router.post('/add-anime-video',addAnimeVideoImage, resizeAnimeVideoImage, addAnimeVideoController)
+router.post('/add-anime-video/:id', addAnimeVideoController)
 
 router.delete('/delete-calendar/:id', deleteCalendarController)
 

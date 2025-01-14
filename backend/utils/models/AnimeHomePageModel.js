@@ -9,10 +9,26 @@ const Schema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  animeEpisode: {
+  animeTotalEpisode: {
     type: String,
     required: true,
   },
+  animeEpisodes: [
+    {
+      episodeNumber: {
+        type: String,
+        required: true,
+      },
+      episodeTitle: {
+        type: String,
+        required: true,
+      },
+      embedLink: {
+        type: String,
+        required: true,
+      },
+    },
+  ],
   selectedGenres: {
     type: Array,
     required: true,
