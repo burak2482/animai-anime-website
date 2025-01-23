@@ -15,6 +15,14 @@ const Schema = new mongoose.Schema({
   },
   animeEpisodes: [
     {
+      _id: {
+        type: mongoose.Schema.Types.ObjectId,
+        default: () => new mongoose.Types.ObjectId(),
+      },
+      seasonNumber: {
+        type: String,
+        required: true,
+      },
       episodeNumber: {
         type: String,
         required: true,

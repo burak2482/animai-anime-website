@@ -5,6 +5,6 @@ export const getAnimeVideoController = async (req,res) => {
     const response = await AnimeHomePageModel.find();
     res.status(200).json(response)
   } catch (err) {
-    res.status(400).json('An error happened while getting AnimeVideoModel', err)
+    res.status(400).json({ message: 'An error happened while getting AnimeVideoModel', error: err})
   }
 }

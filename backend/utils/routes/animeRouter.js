@@ -12,6 +12,9 @@ import { deleteAnimeVideoController } from '../controllers/deleteAnimeVideoContr
 import { getAnimeHomePageController } from '../controllers/getAnimeHomePageController.js';
 import { deleteAnimeHomePageController } from '../controllers/deleteAnimeHomePageController.js';
 import { getApiAnimeHomePage } from '../controllers/getApiAnimeHomePageController.js';
+import { getAnimeVideoPlayerController } from '../controllers/getAnimeVideoPlayerController.js';
+import checkAdmin from '../../middleware/checkAdmin.js';
+import authenticateUser from '../../middleware/authenticateUser.js';
 
 const router = express.Router();
 
@@ -25,21 +28,23 @@ router.get('/get-anime-home-page', getAnimeHomePageController)
 
 router.get('/api/get-anime-home-page/:id', getApiAnimeHomePage)
 
-router.post('/add-calendar', uploadCalendarPhoto, resizeCalendarPhoto, addCalendarController)
+router.get('/get-anime-video-player/:id/:episodeNumber', getAnimeVideoPlayerController)
 
-router.post('/add-featured-anime', uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto, addFeaturedAnime)
+router.post('/add-calendar', authenticateUser, checkAdmin, uploadCalendarPhoto, resizeCalendarPhoto, addCalendarController)
 
-router.post('/add-anime-home-page', uploadAnimeHomePagePhoto, resizeAnimeHomePagePhoto, addAnimeHomePageController)
+router.post('/add-featured-anime', authenticateUser, checkAdmin, uploadFeaturedAnimePhoto, resizeFeaturedAnimePhoto, addFeaturedAnime)
 
-router.post('/add-anime-video/:id', addAnimeVideoController)
+router.post('/add-anime-home-page', authenticateUser, checkAdmin, uploadAnimeHomePagePhoto, resizeAnimeHomePagePhoto, addAnimeHomePageController)
 
-router.delete('/delete-calendar/:id', deleteCalendarController)
+router.post('/add-anime-video/:id', authenticateUser, checkAdmin, addAnimeVideoController)
 
-router.delete('/delete-anime-video/:id', deleteAnimeVideoController)
+router.delete('/delete-calendar/:id', authenticateUser, checkAdmin, deleteCalendarController)
 
-router.delete('/delete-anime-home-page/:id', deleteAnimeHomePageController)
+router.delete('/delete-anime-video/:id', authenticateUser, checkAdmin, deleteAnimeVideoController)
 
-router.delete('/delete-featured-anime/:id', deleteFeaturedAnime)
+router.delete('/delete-anime-home-page/:id', authenticateUser, checkAdmin, deleteAnimeHomePageController)
+
+router.delete('/delete-featured-anime/:id', authenticateUser, checkAdmin, deleteFeaturedAnime)
 
 /*router.post('/upload-featured-anime-model')*/
 

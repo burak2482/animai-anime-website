@@ -12,6 +12,7 @@ export default {
         customJaro: ['Jaro', 'sans-serif'],
         customBebas: ['Bebas', 'sans-serif'],
         customRubik: ['Rubik', 'sans-serif'],
+        customFjalla: ['Fjalla', 'sans-serif'],
       },
       colors: {
         customBlue: '#cedef0',

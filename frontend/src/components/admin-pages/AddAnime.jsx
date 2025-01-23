@@ -6,6 +6,7 @@ const AddAnime = () => {
   const [episodeTitle, setEpisodeTitle] = useState('');
   const [filteredAnimeList, setFilteredAnimeList] = useState([]);
   const [animeSearch, setAnimeSearch] = useState('');
+  const [seasonNumber, setSeasonNumber] = useState('');
   const [embedLink, setEmbedLink] = useState('');
   const [animeID, setAnimeID] = useState('');
   const [animeHomePageLink, setAnimeHomePageLink] = useState('');
@@ -36,6 +37,7 @@ const AddAnime = () => {
     const formData = {
       episodeNumber,
       episodeTitle,
+      seasonNumber,
       embedLink,
     }
 
@@ -62,10 +64,10 @@ const AddAnime = () => {
     }
   };
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (animeId, episodeId) => {
     try {
-      await axios.delete(`http://localhost:5000/user/delete-anime-video/${id}`);
-      setAnimeList((animeList) => animeList.filter((anime) => anime.id !== id));
+      await axios.delete(`http://localhost:5000/user/delete-anime-video/${animeId}`, {data: {episodeId}} );
+      setAnimeList((animeList) => animeList.filter((anime) => anime._id !== animeId));
       getAnimeList();
     } catch (err) {
       console.log("Error happened while deleting Anime info:", err.response?.data || err.message);
@@ -82,6 +84,8 @@ const AddAnime = () => {
           <input type="text" value={episodeTitle} onChange={(e) => setEpisodeTitle(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
           <label className="text-xl font-semibold font-mono text-black">Anime Embed Kodu</label>
           <input type="text" value={embedLink} onChange={(e) => setEmbedLink(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
+          <label className="text-xl font-semibold font-mono text-black">Sezon Numarası</label>
+          <input type="text" value={seasonNumber} onChange={(e) => setSeasonNumber(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
           <label className="text-xl font-semibold font-mono text-black">Anime ID</label>
           <input type="text" value={animeID} onChange={(e) => setAnimeID(e.target.value)} className="bg-slate-100 py-1 px-4 rounded-lg" />
           <label className="text-xl font-semibold font-mono text-black">Bölüm Numarası</label>
@@ -96,6 +100,7 @@ const AddAnime = () => {
             <tr>
               <th className="font-semibold text-xl text-center px-16">Bölüm İsmi</th>
               <th className="font-semibold text-xl text-center px-16">Bölüm Numarası</th>
+              <th className="font-semibold text-xl text-center px-16">Sezon Numarası</th>
               <th className="font-semibold text-xl text-center px-16">Düzenle</th>
             </tr>
           </thead>
@@ -110,9 +115,11 @@ const AddAnime = () => {
                 <tr key={`${index}-${episodeIndex}`} className="">
                   <td className="font-semibold text-xl text-center w-full">{episode.episodeTitle}</td>
                   <td className="font-semibold text-xl text-center w-full">{episode.episodeNumber}</td>
+                  <td className="font-semibold text-xl text-center w-full">{episode.seasonNumber}</td>
                   <td className="font-semibold text-xl text-center w-full">
                     <button
-                      onClick={() => handleDelete(anime._id)}
+                      type="button"
+                      onClick={() => handleDelete(anime._id, episode._id)}
                       className="justify-center items-center bg-neutral-900 py-2 px-6 rounded-lg text-white font-semibold mb-4"
                     >
                       Sil

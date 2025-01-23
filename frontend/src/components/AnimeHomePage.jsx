@@ -1,9 +1,10 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 const AnimeHomePage = () => {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [animeData, setAnimeData] = useState(null);
 
   const getApiAnimeHomePageData = async () => {
@@ -19,6 +20,10 @@ const AnimeHomePage = () => {
     getApiAnimeHomePageData();
   }, [id]);
 
+  const handleAnimeClick = (episodeNumber, seasonNumber) => {
+    navigate(`/anime/${id}/video/${seasonNumber}/${episodeNumber}`);
+  };
+  
   if (!animeData) return <div>Yükleniyor...</div>;
 
   return (
@@ -40,7 +45,7 @@ const AnimeHomePage = () => {
           </div>
           <p className="text-xl font-semibold font-sans text-white text-pretty">{animeData.animeDescription}</p>
         </section>
-        <section className="absolute top-10 right-10">
+        <section className="absolute top-16 right-10">
           <div className="flex flex-col">
             <h1 className="font-semibold text-white font-customBebas tracking-wider text-2xl mb-2">Türler:</h1>
             <div>
@@ -49,13 +54,29 @@ const AnimeHomePage = () => {
           </div>
         </section>
       </div>
-      <div className="bg-neutral-700 w-full h-full px-80 mt-5 rounded">
-        {animeData.animeEpisodes && animeData.animeEpisodes.map((episode, index) => (
-          <div key={index} onClick={() => handleAnimeClick(episode.id)}>
-            <h1 className="font-semibold text-white text-4xl mb-2 font-mono">{animeData.animeName} - {episode.episodeNumber}. Bölüm</h1>
-          </div>
-        ))}
-      </div>
+      <div className="flex flex-row items-start space-x-28 bg-neutral-700 mt-5 w-full h-full rounded">
+          {animeData.animeEpisodes && Object.entries(
+            animeData.animeEpisodes.reduce((acc, episode) => {
+              const season = episode.seasonNumber || 1;
+              if (!acc[season]) acc[season] = [];
+              acc[season].push(episode);
+              return acc;
+            }, {})
+          ).map(([season, episodes]) => (
+            <div key={season} className="mb-5 mt-5 ml-20">
+              <h1 className="text-white text-3xl font-customBebas tracking-widest font-bold mb-3 border-4 rounded-full w-32 text-center py-2 mt-2">Sezon {season}</h1>
+              {episodes.map((episode, index) => (
+                <div
+                  key={index}
+                  onClick={() => handleAnimeClick(episode.episodeNumber, episode.seasonNumber)}
+                  className="cursor-pointer"
+                >
+                  <h1 className="font-semibold font-customFjalla text-white text-2xl mb-3 font-customSerif">{animeData.animeName} - {episode.episodeNumber}. Bölüm</h1>
+                </div>
+              ))}
+            </div>
+          ))}
+        </div>
     </main>
   );
 };

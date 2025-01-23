@@ -50,7 +50,7 @@ export const resizeAnimeVideoImage = async (req,res,next) => {
 
 
 export const addAnimeVideoController = async (req,res) => {
-  const {episodeNumber, episodeTitle, embedLink} = req.body;
+  const {episodeNumber, episodeTitle, seasonNumber, embedLink} = req.body;
 
   const {id} = req.params;
 
@@ -64,7 +64,7 @@ export const addAnimeVideoController = async (req,res) => {
       id,
       {
         $push: {
-          animeEpisodes: { episodeNumber, episodeTitle, embedLink },
+          animeEpisodes: { seasonNumber, episodeNumber, episodeTitle, embedLink },
         },
       },
       { new: true, runValidators: true }

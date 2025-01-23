@@ -11,7 +11,11 @@ import AnimeVideoPage from './components/AnimeVideoPage.jsx';
 import AddAnime from './components/admin-pages/AddAnime.jsx';
 import AddAnimeHomePage from './components/admin-pages/AddAnimeHomePage.jsx';
 import AnimeHomePage from './components/AnimeHomePage.jsx';
-
+import UserLoginPage from './components/UserLoginPage.jsx';
+import UserSignUpPage from './components/UserSignUpPage.jsx';
+import ProfilePage from './components/ProfilePage.jsx';
+import ChangeProfilePicture from './components/user-pages/ChangeProfilePicture.jsx';
+import ChangeCurrentPassword from './components/user-pages/ChangeCurrentPassword.jsx';
 function App() {
   const [isCalendarOpen, setIsCalendarOpen] = useState(false);
 
@@ -29,6 +33,12 @@ function App() {
           <Route path="/" element={<Homepage isCalendarOpen={isCalendarOpen} setIsCalendarOpen={setIsCalendarOpen} />} />
           <Route path="/anime-video-page" element={<AnimeVideoPage />} />
           <Route path="/anime/:id" element={<AnimeHomePage />} />
+          <Route path="/anime/:id/video/:seasonNumber/:episodeNumber" element={<AnimeVideoPage />} />
+          <Route path="/account/log-in" element={<UserLoginPage />} />
+          <Route path="/account/sign-up" element={<UserSignUpPage />} />
+          <Route path="/account/user-profile" element={<ProfilePage/>} />
+          <Route path="/account/change-profile-picture" element={<ChangeProfilePicture />} />
+          <Route path="/account/reset-password" element={<ChangeCurrentPassword />} />
         </Route>
       </Routes>
     </Router>
