@@ -6,7 +6,6 @@ import { useAuthContext } from './context/useAuthContext';
 const Header = ({isCalendarOpen, setIsCalendarOpen}) => {
 
   const {user} = useAuthContext();
-  console.log("User durumu:", user);
 
   return (
     <div className="bg-neutral-800">

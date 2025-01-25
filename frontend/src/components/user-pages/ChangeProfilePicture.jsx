@@ -82,7 +82,7 @@ const ChangeProfilePicture = () => {
                   </div>
                   <div className="flex flex-row items-center border-b-2 w-full">
                     <h1 className="font-semibold text-2xl font-sans text-white mr-6 mb-2">Yetki:</h1>
-                    <label className={`border-4 text-xl px-6 py-1 font-customFjalla font-bold rounded-xl mb-2 ${userData.role === 'admin' ? "border-red-800 text-red-800" : "border-blue-800 text-blue-800"}`}>{userData.role}</label>
+                    <label className={`border-4 text-xl px-6 py-1 font-customFjalla font-bold rounded-xl mb-2 ${userData.role === 'admin' ? "border-red-800 text-red-800" : "border-blue-700 text-blue-400"}`}>{userData.role}</label>
                   </div>
                   <div className="flex flex-row justify-center items-center">
                     <img src={userPhotoPreview ? userPhotoPreview : userData.photo} className="w-16 h-16 rounded-full object-cover"/>

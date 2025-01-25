@@ -17,4 +17,6 @@ userRouter.post('/reset-user-password/:token', resetUserPasswordController)
 
 userRouter.get('/get-user-profile-data/:token', getUserProfileData)
 
+userRouter.get('/get-user-profile-data-for-video-page/:token', getUserProfileData)
+
 export default userRouter;
